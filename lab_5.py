@@ -4,7 +4,7 @@ from scipy import interpolate
 from numpy.linalg import inv
 from math import sin
 
-## Example1
+### Example1
 c = np.linspace(-3,3,7)
 x = np.linspace(-5,5,101)
 
@@ -17,12 +17,11 @@ def dy_cos(x):
 	return np.cos(x)
 
 for i in range(len(c)):
-	f = y(x) + c[i]
+	f = y_sin(x) + c[i]
 	plt.plot(x,f)
 plt.show()
 
-############################
-# Example_2
+###########################
 # air_drag
 
 t = np.linspace(0,5,11)
@@ -53,9 +52,8 @@ v1 = np.reshape(v_array,(11,11))
 plt.quiver(Y,X,u1,v1)
 plt.show()
 
-########################
-### Example 3
-### Eulers method
+#######################
+## Eulers method
 
 x0 = 0
 y0 = 1
@@ -74,12 +72,12 @@ yvec.append(y0)
 
 for i in range(len(xvec)):
 	yvec.append(yvec[i] + (-yvec[i])*deltax)
-	plt.plot(xvec[i],yvec[i],'o')#,'MarkerFaceColor','b','MarkerEdgeColor','k')
+	plt.plot(xvec[i],yvec[i],'o')
 
 plt.show()
 
-########################
-### Runga_Kutle method
+#######################
+## Runga_Kutle method
 
 def dydx(x,y):
 	return -y
@@ -120,11 +118,11 @@ plt.show()
 
 ### assignment_4a
 ### (x**2 + y**2)
+
 def dydx(x,y):
 	return (x**2 + y**2)
 
 def RK4(x0,y0,h):
-	# n = (int)((x-x0)/h)
 	k1 = h*dydx(x0,y0)
 	k2 = h*dydx(x0+h/2, y0+k1/2)
 	k3 = h*dydx(x0+h/2, y0+k2/2)
@@ -134,7 +132,7 @@ def RK4(x0,y0,h):
 	
 	return yn
 
-x0 = 0
+# x0 = 0
 y0 = 1
 
 x = np.linspace(0,2,21)
@@ -143,12 +141,16 @@ plt.figure()
 
 deltax = 0.04
 xvec = np.linspace(x0,x[-1],((x[-1]-x0)/deltax)+1)
-yvec = []
-yvec.append(y0)
+yvecRK = []
+yvecRK.append(y0)
+yvecEU = []
+yvecEU.append(y0)
 
 for i in range(len(xvec)):
-	yvec.append(RK4(xvec[i],yvec[i],deltax))
-	plt.plot(xvec[i],yvec[i],'o')#,'MarkerFaceColor','b','MarkerEdgeColor','k')
+	yvecRK.append(RK4(xvec[i],yvecRK[i],deltax))
+	yvecEU.append(yvecEU[i] + dydx(xvec[i],yvecEU[i])*deltax)
+	plt.plot(xvec[i],yvecRK[i],'o')
+	plt.plot(xvec[i],yvecEU[i], '.')
 
 plt.show()
 
@@ -177,13 +179,17 @@ plt.figure()
 
 deltax = 0.04
 xvec = np.linspace(x0,x[-1],((x[-1]-x0)/deltax)+1)
-yvec = []
-yvec.append(y0)
+yvecRK = []
+yvecRK.append(y0)
+yvecEU = []
+yvecEU.append(y0)
 
 for i in range(len(xvec)):
-	yvec.append(RK4(xvec[i],yvec[i],deltax))
-	plt.plot(xvec[i],yvec[i],'o')#,'MarkerFaceColor','b','MarkerEdgeColor','k')
+	yvecRK.append(RK4(xvec[i],yvecRK[i],deltax))
+	yvecEU.append(yvecEU[i] + dydx(xvec[i],yvecEU[i])*deltax)
+	plt.plot(xvec[i],yvecRK[i],'o')
+	plt.plot(xvec[i],yvecEU[i], '.')
 
 plt.show()
 
-###################################
+##################################
